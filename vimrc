@@ -30,6 +30,11 @@ set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
 
+let mapleader = ","
+noremap j h
+noremap h i
+noremap k j
+noremap i k
 
 set nocompatible               " be iMproved
  filetype off                   " required!
