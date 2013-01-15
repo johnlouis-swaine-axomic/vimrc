@@ -31,10 +31,12 @@ set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
 
 let mapleader = ","
-noremap j h
-noremap h i
 noremap k j
+noremap j h
 noremap i k
+noremap a i
+noremap s a
+noremap h s
 
 set nocompatible               " be iMproved
  filetype off                   " required!
