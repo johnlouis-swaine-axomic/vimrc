@@ -38,6 +38,25 @@ noremap a i
 noremap s a
 noremap h s
 
+vnoremap < <gv
+vnoremap > >gv
+
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au CursorHoldI * stopinsert
+
+" set 'updatetime' to 10 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+au InsertLeave * let &updatetime=updaterestore
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Arrow keys are FORBIDDEN!!! lol
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+for prefix in ['i', 'n', 'v']
+  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+    exe prefix . "noremap " . key . " <Nop>"
+  endfor
+endfor
+
 set nocompatible               " be iMproved
  filetype off                   " required!
 
