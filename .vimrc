@@ -7,6 +7,7 @@ set nocompatible                " Disable Vi compatibility
 syntax on                       " Enable syntax highlighting
 filetype plugin indent on       " Enable file type detection
  
+autocmd vimenter * NERDTree
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set laststatus=2                " Always show status line
 set modeline                    " Look for modeline
@@ -14,7 +15,7 @@ set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
  
-set foldmethod=indent
+set foldmethod=syntax
 "" Command line
 set wildmenu                    " Command line completion
 set showcmd                     " Show (partial) command in status line
@@ -29,7 +30,7 @@ set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
-
+map <C-n> :NERDTreeToggle<CR>
 let mapleader = ","
 noremap k j
 noremap j h
@@ -37,7 +38,11 @@ noremap i k
 noremap a i
 noremap s a
 noremap h s
-
+noremap q b
+nmap <silent> <c-i> :wincmd k<CR>                                                                                                                       
+nmap <silent> <c-k> :wincmd j<CR>                                                                                                                       
+nmap <silent> <c-j> :wincmd h<CR>                                                                                                                       
+nmap <silent> <c-l> :wincmd l<CR>
 vnoremap < <gv
 vnoremap > >gv
 
@@ -49,19 +54,27 @@ au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
 au InsertLeave * let &updatetime=updaterestore
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Arrow keys are FORBIDDEN!!! lol
+" Arrow keys are FORBIDDEN!!! ol
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 for prefix in ['i', 'n', 'v']
   for key in ['<Up>', '<Down>', '<Left>', '<Right>']
     exe prefix . "noremap " . key . " <Nop>"
   endfor
 endfor
-
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+set number
 set nocompatible               " be iMproved
  filetype off                   " required!
 
  set rtp+=~/.vim/bundle/vundle/
  call vundle#rc()
+nnoremap f za
+nnoremap F zR
 
  " let Vundle manage Vundle
  " required! 
@@ -71,17 +84,18 @@ set nocompatible               " be iMproved
  "
  " original repos on github
  Bundle 'tpope/vim-fugitive'
+ Bundle 'The-Nerd-Tree'
  Bundle 'Lokaltog/vim-easymotion'
  Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  Bundle 'tpope/vim-rails.git'
  " vim-scripts repos
  Bundle 'https://github.com/pangloss/vim-javascript.git'
- Bundle 'L9'
- Bundle 'flaxx/vim-colorschemes'
- Bundle 'FuzzyFinder'
- " non github repos
- Bundle 'git://git.wincent.com/command-t.git'
- " ...
+Bundle 'L9'
+Bundle 'flaxx/vim-colorschemes'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+" ...
 
  filetype plugin indent on     " required!
  "
@@ -93,10 +107,14 @@ set nocompatible               " be iMproved
  "
  " see :h vundle for more details or wiki for FAQ
  " NOTE: comments after Bundle command are not allowed..
-
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
 if has('mouse')
 	set mouse=a
 endif
-
+if has("gui_macvim")
+  let macvim_hig_shift_movement = 1
+endif
 execute pathogen#infect()
-colorscheme espressolibre
+set background=dark
+colorscheme solarized
