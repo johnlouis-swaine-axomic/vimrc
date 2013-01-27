@@ -15,6 +15,7 @@ set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
 set cc=80
+set vb
 set foldmethod=syntax
 "" Command line
 set wildmenu                    " Command line completion
