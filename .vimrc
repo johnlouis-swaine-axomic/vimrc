@@ -6,7 +6,8 @@ set nocompatible                " Disable Vi compatibility
  
 syntax on                       " Enable syntax highlighting
 filetype plugin indent on       " Enable file type detection
- 
+filetype plugin on
+set ofu=syntaxcomplete#Complete 
 autocmd vimenter * NERDTree
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set laststatus=2                " Always show status line
@@ -97,6 +98,19 @@ Bundle 'FuzzyFinder'
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 " ...
+function! CleverTab()
+  if pumvisible()
+    return "\<C-N>"
+  endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<Tab>"
+  elseif exists('&omnifunc') && &omnifunc != ''
+    return "\<C-X>\<C-O>"
+  else
+    return "\<C-N>"
+  endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
 
  filetype plugin indent on     " required!
  "
