@@ -69,6 +69,8 @@ if exists(":Tabularize")
   nmap <Leader>a: :Tabularize /:\zs<CR>
   vmap <Leader>a: :Tabularize /:\zs<CR>
 endif
+map <D-/> :call NERDComment(0,"toggle")<C-m>
+
 set number
 set nocompatible               " be iMproved
  filetype off                   " required!
@@ -194,3 +196,27 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 colorscheme solarized
+
+" Movement between tabs OR buffers
+nnoremap <C-l> :call MyNext()<CR>
+nnoremap <C-J> :call MyPrev()<CR>
+
+" MyNext() and MyPrev(): Movement between tabs OR buffers
+function! MyNext()
+    if exists( '*tabpagenr' ) && tabpagenr('$') != 1
+        " Tab support && tabs open
+        normal gt
+    else
+        " No tab support, or no tabs open
+        execute ":bnext"
+    endif
+endfunction
+function! MyPrev()
+    if exists( '*tabpagenr' ) && tabpagenr('$') != '1'
+        " Tab support && tabs open
+        normal gT
+    else
+        " No tab support, or no tabs open
+        execute ":bprev"
+    endif
+endfunction
