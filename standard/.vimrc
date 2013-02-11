@@ -3,7 +3,9 @@
 " GENERAL SETTINGS                                                             {{{
 " --------------------------------------------------------------------------------
 set nocompatible                " Disable Vi compatibility
- 
+let &t_Co=256
+" Use Node.js for JavaScript interpretation
+let $JS_CMD='node'
 syntax on                       " Enable syntax highlighting
 filetype plugin indent on       " Enable file type detection
 filetype plugin on
@@ -108,6 +110,7 @@ if has('mouse')
 	set mouse=a
 endif
 if has("gui_macvim")
+  map <D-2> <Leader>c<Space>
   let macvim_hig_shift_movement = 1
 endif
 execute pathogen#infect()
@@ -188,27 +191,3 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 colorscheme solarized
-
-" Movement between tabs OR buffers
-nnoremap <C-]> :call MyNext()<CR>
-nnoremap <C-[> :call MyPrev()<CR>
-
-" MyNext() and MyPrev(): Movement between tabs OR buffers
-function! MyNext()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != 1
-        " Tab support && tabs open
-        normal gt
-    else
-        " No tab support, or no tabs open
-        execute ":bnext"
-    endif
-endfunction
-function! MyPrev()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != '1'
-        " Tab support && tabs open
-        normal gT
-    else
-        " No tab support, or no tabs open
-        execute ":bprev"
-    endif
-endfunction
