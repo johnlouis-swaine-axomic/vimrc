@@ -8,7 +8,6 @@ syntax on                       " Enable syntax highlighting
 filetype plugin indent on       " Enable file type detection
 filetype plugin on
 set ofu=syntaxcomplete#Complete 
-autocmd vimenter * NERDTree
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set laststatus=2                " Always show status line
 set modeline                    " Look for modeline
@@ -32,7 +31,6 @@ set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
-map <C-n> :NERDTreeToggle<CR>
 let mapleader = ","
 noremap k j
 noremap j h
@@ -61,8 +59,6 @@ au CursorHoldI * stopinsert
 " set 'updatetime' to 10 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
 au InsertLeave * let &updatetime=updaterestore
-
-colorscheme solarized
 
 " Movement between tabs OR buffers
 nnoremap <C-]> :call MyNext()<CR>
