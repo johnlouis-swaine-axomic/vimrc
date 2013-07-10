@@ -1,25 +1,38 @@
 " vim: fdm=marker
  
-" GENERAL SETTINGS                                                             {{{
+" GENERAL SETTINGS                                                            
 " --------------------------------------------------------------------------------
 set nocompatible                " Disable Vi compatibility
-let &t_Co=256
-" Use Node.js for JavaScript interpretation
-let $JS_CMD='node'
-syntax on                       " Enable syntax highlighting
+
+set rtp+=~/.vim/bundle/vundle/ 
+call vundle#rc()   
+Bundle 'gmarik/vundle'
+Bundle 'Tabular'
+Bundle 'Shougo/neocomplcache'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'bling/vim-airline'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'tpope/vim-fugitive'
+Bundle 'Syntastic'
+Bundle 'ctrlp.vim'
+
+set background=dark
+colorscheme solarized
+syntax on                       " Enablex syntax highlighting
 filetype plugin indent on       " Enable file type detection
 filetype plugin on
 set ofu=syntaxcomplete#Complete 
-autocmd vimenter * NERDTree
 set encoding=utf-8              " Use UTF-8 as default file encoding
 set laststatus=2                " Always show status line
 set modeline                    " Look for modeline
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
-set cc=80
+if version >= 703
+    set cc=80
+endif
 set vb
-set foldmethod=syntax
+set foldmethod=manual
 "" Command line
 set wildmenu                    " Command line completion
 set showcmd                     " Show (partial) command in status line
@@ -28,13 +41,13 @@ set showcmd                     " Show (partial) command in status line
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
- 
+set expandtab 
 "" Searching
+set smartindent
 set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
-map <C-n> :NERDTreeToggle<CR>
 let mapleader = ","
 noremap k j
 noremap j h
@@ -43,23 +56,18 @@ noremap a i
 noremap s a
 noremap h s
 noremap q b
-nmap <silent> <c-i> :wincmd k<CR>                                                                                                                       
-nmap <silent> <c-k> :wincmd j<CR>                                                                                                                       
-nmap <silent> <c-j> :wincmd h<CR>                                                                                                                       
+nmap <silent> <c-i> :wincmd k<CR>                   
+nmap <silent> <c-k> :wincmd j<CR>                                           
+nmap <silent> <c-j> :wincmd h<CR>                             
 nmap <silent> <c-l> :wincmd l<CR>
 vnoremap < <gv
 vnoremap > >gv
-
-" automatically leave insert mode after 'updatetime' milliseconds of inaction
-au CursorHoldI * stopinsert
-
-" set 'updatetime' to 10 seconds when in insert mode
-au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
-au InsertLeave * let &updatetime=updaterestore
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Arrow keys are FORBIDDEN!!! ol
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap f za
+nnoremap F zR
+nmap ; :CtrlPBuffer<CR>
+set guioptions-=r
+set guioptions-=L
+set guioptions-=m  "remove menu bar
 for prefix in ['i', 'n', 'v']
   for key in ['<Up>', '<Down>', '<Left>', '<Right>']
     exe prefix . "noremap " . key . " <Nop>"
@@ -68,53 +76,15 @@ endfor
 set number
 set nocompatible               " be iMproved
  filetype off                   " required!
-
- set rtp+=~/.vim/bundle/vundle/
- call vundle#rc()
-nnoremap f za
-nnoremap F zR
-
- " let Vundle manage Vundle
- " required! 
- Bundle 'gmarik/vundle'
-
- " My Bundles here:
- "
- " original repos on github
- Bundle 'tpope/vim-fugitive'
- Bundle 'The-Nerd-Tree'
- Bundle 'Lokaltog/vim-easymotion'
- Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
- Bundle 'tpope/vim-rails.git'
- " vim-scripts repos
- Bundle 'https://github.com/pangloss/vim-javascript.git'
-Bundle 'L9'
-Bundle 'flaxx/vim-colorschemes'
-Bundle 'FuzzyFinder'
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-" ...
- filetype plugin indent on     " required!
- "
- " Brief help
- " :BundleList          - list configured bundles
- " :BundleInstall(!)    - install(update) bundles
- " :BundleSearch(!) foo - search(or refresh cache first) for foo
- " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
- "
- " see :h vundle for more details or wiki for FAQ
- " NOTE: comments after Bundle command are not allowed..
+set previewheight=20
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
-if has('mouse')
-	set mouse=a
-endif
 if has("gui_macvim")
-  map <D-2> <Leader>c<Space>
   let macvim_hig_shift_movement = 1
 endif
-execute pathogen#infect()
-set background=dark
+
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -157,7 +127,7 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -190,4 +160,4 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-colorscheme solarized
+
