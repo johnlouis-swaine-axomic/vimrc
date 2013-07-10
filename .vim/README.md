@@ -1,90 +1,73 @@
-" vim: fdm=marker
- 
-" GENERAL SETTINGS                                                            
-" --------------------------------------------------------------------------------
-set nocompatible                " Disable Vi compatibility
+**neocomplcache**
+=================
 
-set rtp+=~/.vim/bundle/vundle/ 
-call vundle#rc()   
-Bundle 'gmarik/vundle'
-Bundle 'Tabular'
-Bundle 'Shougo/neocomplcache'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'bling/vim-airline'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Syntastic'
-Bundle 'ctrlp.vim'
+Description
+-----------
 
-set background=dark
-colorscheme solarized
-syntax on                       " Enablex syntax highlighting
-filetype plugin indent on       " Enable file type detection
-filetype plugin on
-set ofu=syntaxcomplete#Complete 
-set encoding=utf-8              " Use UTF-8 as default file encoding
-set laststatus=2                " Always show status line
-set modeline                    " Look for modeline
-set autoread                    " Reload unchanged buffer when file changes
-set history=500                 " Keep 500 lines of history
-set hidden                      " Allow unedited buffers to be hidden
-if version >= 703
-    set cc=80
-endif
-set vb
-set foldmethod=manual
-"" Command line
-set wildmenu                    " Command line completion
-set showcmd                     " Show (partial) command in status line
- 
-"" Whitespace
-set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
-set tabstop=4                   " Tabs count for 4 spaces
-set shiftwidth=4                " Each indent step is 4 spaces
-set expandtab 
-"" Searching
-set smartindent
-set hlsearch                    " Highlight search matches
-set incsearch                   " Do incremental searching
-set ignorecase                  " Searches are case-insensitive...
-set smartcase                   " ...unless they contain at least one capital letter
-let mapleader = ","
-noremap k j
-noremap j h
-noremap i k
-noremap a i
-noremap s a
-noremap h s
-noremap q b
-nmap <silent> <c-i> :wincmd k<CR>                   
-nmap <silent> <c-k> :wincmd j<CR>                                           
-nmap <silent> <c-j> :wincmd h<CR>                             
-nmap <silent> <c-l> :wincmd l<CR>
-vnoremap < <gv
-vnoremap > >gv
-nnoremap f za
-nnoremap F zR
-nmap ; :CtrlPBuffer<CR>
-set guioptions-=r
-set guioptions-=L
-set guioptions-=m  "remove menu bar
-for prefix in ['i', 'n', 'v']
-  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
-    exe prefix . "noremap " . key . " <Nop>"
-  endfor
-endfor
-set number
-set nocompatible               " be iMproved
- filetype off                   " required!
-set previewheight=20
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-if has("gui_macvim")
-  let macvim_hig_shift_movement = 1
-endif
+neocomplcache provides keyword completion system by maintaining a cache of
+keywords in the current buffer. neocomplcache could be customized easily and
+has a lot more features than the Vim's standard completion feature.
+Note: neocomplcache may consume more memory than other plugins.
 
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+Installation
+============
+
+* Extract the file and put files in your Vim directory
+   (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
+* Execute `|:NeoComplCacheEnable|` command or
+`let g:neocomplcache_enable_at_startup = 1`
+in your `.vimrc`. Not in `.gvimrc`(`_gvimrc`)!
+
+Caution
+-------
+
+Because all variable names were changed in neocomplcache Ver.5, it is not
+backwards compatible. If you want to upgrade, you should use the following
+script from Mr.thinca.
+
+http://gist.github.com/422503
+
+Snippets feature(snippets\_complete source) was splitted from Ver.7.
+If you used it, please install snippets\_complete source manually.
+
+https://github.com/Shougo/neocomplcache-snippets-complete
+
+Screen shots
+============
+
+Quick match
+-----------
+![Quick match.](http://3.bp.blogspot.com/_ci2yBnqzJgM/TD1PeahCmOI/AAAAAAAAADc/Rz_Pbpr92z4/s1600/quick_match.png)
+
+Snippet completion like snipMate.
+---------------------------------
+![Snippet completion like snipMate.](http://s14.postimage.org/6m073xpwh/Screenshot2.png)
+
+Original filename completion.
+-----------
+![Original filename completion.](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1O5_bOQ2I/AAAAAAAAADE/vHf9Xg_mrTI/s1600/filename_complete.png)
+
+Register completion.
+-----------
+![Register completion.](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1Pel4fomI/AAAAAAAAADk/YsAxF8i6r3w/s1600/register_complete.png)
+
+Omni completion.
+----------------
+![Omni completion.](http://2.bp.blogspot.com/_ci2yBnqzJgM/TD1PTolkTBI/AAAAAAAAADU/knJ3eniuHWI/s1600/omni_complete.png)
+
+Completion with vimshell(http://github.com/Shougo/vimshell).
+------------------------------------------------------------
+![Completion with vimshell(http://github.com/Shougo/vimshell).](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1PLfdQrwI/AAAAAAAAADM/2pSFRTHwYOY/s1600/neocomplcache_with_vimshell.png)
+
+Vim completion
+------------------------------------------------------------
+![Vim completion.](http://1.bp.blogspot.com/_ci2yBnqzJgM/TD1PfKTlwnI/AAAAAAAAADs/nOGWTRLuae8/s1600/vim_complete.png)
+
+Setting examples
+
+```vim
+" Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
+let g:acp_enableAtStartup = 0
 " Launches neocomplcache automatically on vim startup.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -110,10 +93,7 @@ if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-set guioptions-=r
-set guioptions-=L
-set guioptions-=m  "remove menu bar
- 
+
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neocomplcache_snippets_expand)
 smap <C-k>     <Plug>(neocomplcache_snippets_expand)
@@ -127,7 +107,7 @@ inoremap <expr><C-l>     neocomplcache#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -160,4 +140,4 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-
+```

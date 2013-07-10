@@ -4,21 +4,9 @@
 " --------------------------------------------------------------------------------
 set nocompatible                " Disable Vi compatibility
 
-set rtp+=~/.vim/bundle/vundle/ 
-call vundle#rc()   
-Bundle 'gmarik/vundle'
-Bundle 'Tabular'
-Bundle 'Shougo/neocomplcache'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'bling/vim-airline'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'tpope/vim-fugitive'
-Bundle 'Syntastic'
-Bundle 'ctrlp.vim'
+execute pathogen#infect()
 
-set background=dark
-colorscheme solarized
-syntax on                       " Enablex syntax highlighting
+synta on                       " Enablex syntax highlighting
 filetype plugin indent on       " Enable file type detection
 filetype plugin on
 set ofu=syntaxcomplete#Complete 
@@ -28,11 +16,9 @@ set modeline                    " Look for modeline
 set autoread                    " Reload unchanged buffer when file changes
 set history=500                 " Keep 500 lines of history
 set hidden                      " Allow unedited buffers to be hidden
-if version >= 703
-    set cc=80
-endif
+set cc=80
 set vb
-set foldmethod=manual
+set foldmethod=syntax
 "" Command line
 set wildmenu                    " Command line completion
 set showcmd                     " Show (partial) command in status line
@@ -41,9 +27,8 @@ set showcmd                     " Show (partial) command in status line
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 set tabstop=4                   " Tabs count for 4 spaces
 set shiftwidth=4                " Each indent step is 4 spaces
-set expandtab 
+ 
 "" Searching
-set smartindent
 set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
@@ -64,10 +49,18 @@ vnoremap < <gv
 vnoremap > >gv
 nnoremap f za
 nnoremap F zR
-nmap ; :CtrlPBuffer<CR>
 set guioptions-=r
 set guioptions-=L
 set guioptions-=m  "remove menu bar
+ " automatically leave insert mode after 'updatetime' milliseconds of inaction
+au CursorHoldI * stopinsert
+
+" set 'updatetime' to 10 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+au InsertLeave * let &updatetime=updaterestore
+set background=dark
+colorscheme solarized
+
 for prefix in ['i', 'n', 'v']
   for key in ['<Up>', '<Down>', '<Left>', '<Right>']
     exe prefix . "noremap " . key . " <Nop>"
@@ -76,7 +69,7 @@ endfor
 set number
 set nocompatible               " be iMproved
  filetype off                   " required!
-set previewheight=20
+
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
 if has("gui_macvim")

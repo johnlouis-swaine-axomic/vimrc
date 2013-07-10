@@ -1,6 +1,6 @@
 " vim: fdm=marker
  
-" GENERAL SETTINGS                                                             {{{
+" GENERAL SETTINGS                                                            
 " --------------------------------------------------------------------------------
 set nocompatible                " Disable Vi compatibility
  
@@ -47,9 +47,6 @@ vnoremap < <gv
 vnoremap > >gv
 nnoremap f za
 nnoremap F zR
-if has('mouse')
-	set mouse=a
-endif
 set guioptions-=r
 set guioptions-=L
 set guioptions-=m  "remove menu bar
@@ -59,31 +56,6 @@ au CursorHoldI * stopinsert
 " set 'updatetime' to 10 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
 au InsertLeave * let &updatetime=updaterestore
-
-" Movement between tabs OR buffers
-nnoremap <C-]> :call MyNext()<CR>
-nnoremap <C-[> :call MyPrev()<CR>
-
-" MyNext() and MyPrev(): Movement between tabs OR buffers
-function! MyNext()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != 1
-        " Tab support && tabs open
-        normal gt
-    else
-        " No tab support, or no tabs open
-        execute ":bnext"
-    endif
-endfunction
-function! MyPrev()
-    if exists( '*tabpagenr' ) && tabpagenr('$') != '1'
-        " Tab support && tabs open
-        normal gT
-    else
-        " No tab support, or no tabs open
-        execute ":bprev"
-    endif
-endfunction
-
 for prefix in ['i', 'n', 'v']
   for key in ['<Up>', '<Down>', '<Left>', '<Right>']
     exe prefix . "noremap " . key . " <Nop>"
@@ -95,18 +67,6 @@ set nocompatible               " be iMproved
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
-if has('mouse')
-	set mouse=a
-endif
 if has("gui_macvim")
   let macvim_hig_shift_movement = 1
 endif
-
-
-
-
-
-
-
-" ALL PLUGIN-DEPENDENT OPTIONS BELOW ==================
-
