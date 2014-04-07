@@ -13,12 +13,14 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'bling/vim-airline'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/commentary.vim'
 Bundle 'Syntastic'
 Bundle 'ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'christoomey/vim-tmux-navigator'
 
 set background=dark
 colorscheme solarized
-syntax on                       " Enablex syntax highlighting
 filetype plugin indent on       " Enable file type detection
 filetype plugin on
 set ofu=syntaxcomplete#Complete 
@@ -48,22 +50,22 @@ set hlsearch                    " Highlight search matches
 set incsearch                   " Do incremental searching
 set ignorecase                  " Searches are case-insensitive...
 set smartcase                   " ...unless they contain at least one capital letter
-let mapleader = ","
-noremap k j
-noremap j h
-noremap i k
-noremap a i
-noremap s a
-noremap h s
-noremap q b
-nmap <silent> <c-i> :wincmd k<CR>                   
-nmap <silent> <c-k> :wincmd j<CR>                                           
-nmap <silent> <c-j> :wincmd h<CR>                             
+"let mapleader = ","
+set relativenumber
+"noremap k j
+"noremap j h
+"noremap i k
+"noremap a i
+"noremap s a
+"noremap h s
+"noremap q b
+map <D-2> \\\
+nma <silent> <c-k> :wincmd k<CR>                   
+nmap <silent> <c-j> :wincmd j<CR>                                           
+nmap <silent> <c-h> :wincmd h<CR>                             
 nmap <silent> <c-l> :wincmd l<CR>
 vnoremap < <gv
 vnoremap > >gv
-nnoremap f za
-nnoremap F zR
 nmap ; :CtrlPBuffer<CR>
 set guioptions-=r
 set guioptions-=L
@@ -73,9 +75,9 @@ for prefix in ['i', 'n', 'v']
     exe prefix . "noremap " . key . " <Nop>"
   endfor
 endfor
-set number
+set rnu
 set nocompatible               " be iMproved
- filetype off                   " required!
+filetype off                   " required!
 set previewheight=20
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
@@ -161,3 +163,4 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
+syntax on                       " Enablex syntax highlighting
